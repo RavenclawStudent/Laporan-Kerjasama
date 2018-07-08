@@ -26,8 +26,8 @@ public class Data extends javax.swing.JFrame {
 
     static final String JBDC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/laporkerma";
-    static final String DB_USERNAME = "root";
-    static final String DB_PASSWORD = "";
+    static final String DB_USERNAME = "kerma";
+    static final String DB_PASSWORD = "Laporkerma1@";
     Connection conn = null;
     Statement stmt = null;
     String cari = null;
@@ -122,7 +122,7 @@ public class Data extends javax.swing.JFrame {
             System.out.println(sql);
             System.out.println("Exesuting query...\n");
             ResultSet rs = stmt.executeQuery(sql);
-
+            
             while (rs.next()) {
                 String no = rs.getString("nomor");
                 String nama = rs.getString("nama");
@@ -174,9 +174,9 @@ public class Data extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        detailButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -195,7 +195,7 @@ public class Data extends javax.swing.JFrame {
 
         jLabel1.setText("Pencarian");
 
-        jTextField1.setToolTipText("Nama ");
+        jTextField1.setToolTipText("");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -216,19 +216,19 @@ public class Data extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Lihat Detail");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        detailButton.setText("Lihat Detail");
+        detailButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                detailButtonActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Edit Data");
+        editButton.setText("Edit Data");
 
-        jButton5.setText("Hapus Data");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setText("Hapus Data");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
@@ -250,13 +250,13 @@ public class Data extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(detailButton, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 187, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -273,9 +273,9 @@ public class Data extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(detailButton)
+                    .addComponent(editButton)
+                    .addComponent(deleteButton))
                 .addContainerGap())
         );
 
@@ -293,9 +293,9 @@ public class Data extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_detailButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         cari = jTextField1.getText();
@@ -303,7 +303,7 @@ public class Data extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         int i = jTable1.getSelectedRow();
         id = (String) jTable1.getValueAt(i, 0);
         System.out.println(id);
@@ -311,7 +311,7 @@ public class Data extends javax.swing.JFrame {
         tampil();
 
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -349,11 +349,11 @@ public class Data extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton detailButton;
+    private javax.swing.JButton editButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

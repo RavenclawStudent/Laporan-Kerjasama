@@ -5,6 +5,18 @@
  */
 package lapor.kerma.frame;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lapor.kerma.Kerma;
+import static lapor.kerma.frame.Data.DB_URL;
+
 /**
  *
  * @author ODETTE
@@ -13,11 +25,127 @@ public class Detail extends javax.swing.JFrame {
 
     /**
      * Creates new form Tambah
-     */
+         */
+    static final String JBDC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/laporkerma";
+    static final String DB_USERNAME = "kerma";
+    static final String DB_PASSWORD = "Laporkerma1@";
+    Connection conn = null;
+    Statement stmt = null;
+    
+    //Variable Mode untuk edit dan detail
+    public static int MODE=1;
+    public static String id ="BAUK-0001";
+    
+    SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
     public Detail() {
         initComponents();
+        tampilkan_data();
+        //Pengecekan mode, apabila 1 maka detail apabila 2 maka edit
+        if(MODE == 1){
+            //Detail mode
+            //matikan seluruhnya 
+            enable_seluruhnya(false);
+            
+            //matikan button save
+            saveButton.setEnabled(false);
+            //hidupkan Edit button
+            editButton.setEnabled(true);
+        }else{
+            //Edit mode
+            //Hidupkan seluruhnya 
+            enable_seluruhnya(true);
+            
+            //Hidupkan button save
+            saveButton.setEnabled(true);
+            //Matikan Edit button
+            editButton.setEnabled(false);
+        }
+        
     }
-    
+    void tampilkan_data(){
+         try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("Connecting to database...");
+        System.out.println("...");
+        try {
+            conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            if (conn != null) {
+                System.out.println("Successfully connected to database\n");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("Creating statement ...\n");
+        try {
+            stmt = conn.createStatement();
+            String sql = "SELECT * from tb_kerjasama where nomor = '"+id+"'";
+            System.out.println(sql);
+            ResultSet hasil = stmt.executeQuery(sql);
+            
+            hasil.next(); 
+                String no = hasil.getString("nomor");
+                String nama = hasil.getString("nama");
+                String jenis = hasil.getString("jenis");
+                switch (jenis) {
+                    case "1":
+                        jenis = "Memorandum of Understanding";
+                        break;
+                    case "2":
+                        jenis = "Implementation Arrangement";
+                        break;
+                    case "3":
+                        jenis = "Memorandum of Agreement";
+                        break;
+                }
+                
+                String negara = hasil.getString("negara");
+                Date tg_akhir = null,tg_awal=null;
+                String tgl_awal = sm.format(hasil.getDate("tg_awal"));
+                if (hasil.getDate("tg_awal") == null || tgl_awal.equals("0000-00-00")) {
+
+                } else {
+                    tg_awal = hasil.getDate("tg_awal");
+                }
+                String tgl_akhir = sm.format(hasil.getDate("tg_akhir"));
+                if (hasil.getDate("tg_akhir") == null || tgl_akhir.equals("0000-00-00")) {
+
+                } else {
+                    tg_akhir = hasil.getDate("tg_akhir");
+                }
+                String alamat = hasil.getString("alamat");
+                String detail = hasil.getString("detail");
+                String internal = hasil.getString("internal");
+                String partner = hasil.getString("partner");
+                String link = hasil.getString("link");
+                
+                //System.out.println(nama + jenis);
+                Kerma new_kerma = new Kerma(jenis,no,nama,alamat,detail,tg_awal,tg_akhir,internal,partner,link,negara);
+                
+                //tampil di form
+                jenis_kerjasama.setText(jenis);
+                no_dok.setText(no);
+                nama_institusi.setText(nama);
+                address.setText(alamat);
+                bentuk_kerjasama.setText(detail);
+                tgl_dibuat.setText(tg_awal.toString());
+                tgl_berakhir.setText(tg_akhir.toString());
+                pihak_internal.setText(internal);
+                pihak_partner.setText(partner);
+                link_kerjasama.setText(link);
+                
+            
+        } catch (Exception e) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println(e.getMessage());
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,34 +158,41 @@ public class Detail extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        no = new javax.swing.JTextField();
+        no_dok = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        name = new javax.swing.JTextField();
+        nama_institusi = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         address = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        bentuk_kerjasama = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        signature1 = new javax.swing.JTextField();
-        signature2 = new javax.swing.JTextField();
+        pihak_internal = new javax.swing.JTextField();
+        pihak_partner = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        no1 = new javax.swing.JTextField();
-        signature3 = new javax.swing.JTextField();
-        signature4 = new javax.swing.JTextField();
-        signature6 = new javax.swing.JTextField();
+        keluarButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
+        jenis_kerjasama = new javax.swing.JTextField();
+        tgl_dibuat = new javax.swing.JTextField();
+        tgl_berakhir = new javax.swing.JTextField();
+        link_kerjasama = new javax.swing.JTextField();
+        saveButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Jenis Kerjasama");
 
         jLabel2.setText("Nomor Dokumen ");
+
+        no_dok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                no_dokActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Nama Institusi");
 
@@ -71,9 +206,9 @@ public class Detail extends javax.swing.JFrame {
 
         jLabel5.setText("Bentuk Kerjasama");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        bentuk_kerjasama.setColumns(20);
+        bentuk_kerjasama.setRows(5);
+        jScrollPane1.setViewportView(bentuk_kerjasama);
 
         jLabel6.setText("Nama Penandatangan");
 
@@ -85,46 +220,58 @@ public class Detail extends javax.swing.JFrame {
 
         jLabel10.setText("Pihak Partnership");
 
-        signature1.addActionListener(new java.awt.event.ActionListener() {
+        pihak_internal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signature1ActionPerformed(evt);
+                pihak_internalActionPerformed(evt);
             }
         });
 
-        signature2.addActionListener(new java.awt.event.ActionListener() {
+        pihak_partner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signature2ActionPerformed(evt);
+                pihak_partnerActionPerformed(evt);
             }
         });
 
         jLabel11.setText("Link File Kerjasama");
 
-        jButton2.setText("Keluar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        keluarButton.setText("Keluar");
+        keluarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                keluarButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Edit");
-
-        no1.setEnabled(false);
-
-        signature3.addActionListener(new java.awt.event.ActionListener() {
+        editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signature3ActionPerformed(evt);
+                editButtonActionPerformed(evt);
             }
         });
 
-        signature4.addActionListener(new java.awt.event.ActionListener() {
+        jenis_kerjasama.setText("test");
+
+        tgl_dibuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signature4ActionPerformed(evt);
+                tgl_dibuatActionPerformed(evt);
             }
         });
 
-        signature6.addActionListener(new java.awt.event.ActionListener() {
+        tgl_berakhir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signature6ActionPerformed(evt);
+                tgl_berakhirActionPerformed(evt);
+            }
+        });
+
+        link_kerjasama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                link_kerjasamaActionPerformed(evt);
+            }
+        });
+
+        saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
             }
         });
 
@@ -141,9 +288,9 @@ public class Detail extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(keluarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel4)
@@ -152,32 +299,37 @@ public class Detail extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(name))
+                                .addComponent(nama_institusi))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(7, 7, 7)
-                                .addComponent(no)))
+                                .addComponent(no_dok)))
                         .addGap(51, 51, 51))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(no1)
+                        .addComponent(jenis_kerjasama)
                         .addGap(49, 49, 49)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel11))
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(signature1, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                    .addComponent(signature2)
-                    .addComponent(signature3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(signature4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(signature6))
-                .addGap(20, 20, 20))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel11))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pihak_internal, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                            .addComponent(pihak_partner)
+                            .addComponent(tgl_dibuat, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tgl_berakhir, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(link_kerjasama))
+                        .addGap(20, 20, 20))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,74 +338,117 @@ public class Detail extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel7)
-                    .addComponent(no1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(signature3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jenis_kerjasama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tgl_dibuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(no, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(no_dok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(signature4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tgl_berakhir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nama_institusi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(signature1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pihak_internal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel10)
-                    .addComponent(signature2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pihak_partner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
-                        .addComponent(signature6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(link_kerjasama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(editButton)
+                    .addComponent(keluarButton)
+                    .addComponent(saveButton))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void keluarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keluarButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_keluarButtonActionPerformed
 
-    private void signature2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signature2ActionPerformed
+    private void pihak_partnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pihak_partnerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_signature2ActionPerformed
+    }//GEN-LAST:event_pihak_partnerActionPerformed
 
-    private void signature1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signature1ActionPerformed
+    private void pihak_internalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pihak_internalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_signature1ActionPerformed
+    }//GEN-LAST:event_pihak_internalActionPerformed
 
     private void addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addressActionPerformed
 
-    private void signature3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signature3ActionPerformed
+    private void tgl_dibuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgl_dibuatActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_signature3ActionPerformed
+    }//GEN-LAST:event_tgl_dibuatActionPerformed
 
-    private void signature4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signature4ActionPerformed
+    private void tgl_berakhirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgl_berakhirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_signature4ActionPerformed
+    }//GEN-LAST:event_tgl_berakhirActionPerformed
 
-    private void signature6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signature6ActionPerformed
+    private void link_kerjasamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_link_kerjasamaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_signature6ActionPerformed
+    }//GEN-LAST:event_link_kerjasamaActionPerformed
 
+    private void no_dokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_no_dokActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_no_dokActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        // TODO add your handling code here:
+        //matikan edit button
+        editButton.setEnabled(false);
+        //hidupkan save button
+        saveButton.setEnabled(true);
+        
+        //Enable seluruh element 
+        enable_seluruhnya(true);
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        //hidupkan edit button
+        editButton.setEnabled(true);
+        //matikan save button
+        saveButton.setEnabled(false);
+        
+        //Disable seluruhnya
+        //Enable seluruh element 
+        enable_seluruhnya(false);
+    }//GEN-LAST:event_saveButtonActionPerformed
+    void enable_seluruhnya(boolean pilihan){
+        //jenis_kerjasama.setEnabled(pilihan); tidak dapat dicopy
+        jenis_kerjasama.setEditable(pilihan);
+        no_dok.setEditable(pilihan);
+        nama_institusi.setEditable(pilihan);
+        address.setEditable(pilihan);
+        bentuk_kerjasama.setEditable(pilihan);
+        tgl_dibuat.setEditable(pilihan);
+        tgl_berakhir.setEditable(pilihan);
+        pihak_internal.setEditable(pilihan);
+        pihak_partner.setEditable(pilihan);
+        link_kerjasama.setEditable(pilihan);
+        
+        //Kecuali Nomor
+        no_dok.setEditable(false);
+    }
     /**
      * @param args the command line arguments
      */
@@ -294,8 +489,8 @@ public class Detail extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField address;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JTextArea bentuk_kerjasama;
+    private javax.swing.JButton editButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -308,14 +503,15 @@ public class Detail extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField name;
-    private javax.swing.JTextField no;
-    private javax.swing.JTextField no1;
-    private javax.swing.JTextField signature1;
-    private javax.swing.JTextField signature2;
-    private javax.swing.JTextField signature3;
-    private javax.swing.JTextField signature4;
-    private javax.swing.JTextField signature6;
+    private javax.swing.JTextField jenis_kerjasama;
+    private javax.swing.JButton keluarButton;
+    private javax.swing.JTextField link_kerjasama;
+    private javax.swing.JTextField nama_institusi;
+    private javax.swing.JTextField no_dok;
+    private javax.swing.JTextField pihak_internal;
+    private javax.swing.JTextField pihak_partner;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JTextField tgl_berakhir;
+    private javax.swing.JTextField tgl_dibuat;
     // End of variables declaration//GEN-END:variables
 }

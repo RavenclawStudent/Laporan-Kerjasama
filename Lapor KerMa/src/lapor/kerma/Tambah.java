@@ -28,7 +28,7 @@ public class Tambah extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        ComboJenis = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         no = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -48,19 +48,19 @@ public class Tambah extends javax.swing.JFrame {
         signature1 = new javax.swing.JTextField();
         signature2 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        BatalButton = new javax.swing.JButton();
+        SimpanButton = new javax.swing.JButton();
+        ResetButton = new javax.swing.JButton();
         signature3 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Jenis Kerjasama");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Implementation Arrangement", "Memorandum of Understanding", "Memorandum of Agreement" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        ComboJenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Implementation Arrangement", "Memorandum of Understanding", "Memorandum of Agreement" }));
+        ComboJenis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                ComboJenisActionPerformed(evt);
             }
         });
 
@@ -106,19 +106,19 @@ public class Tambah extends javax.swing.JFrame {
 
         jLabel11.setText("Link File Dokumen");
 
-        jButton2.setText("Batal");
+        BatalButton.setText("Batal");
 
-        jButton3.setText("Simpan");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        SimpanButton.setText("Simpan");
+        SimpanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                SimpanButtonActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Reset");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        ResetButton.setText("Reset");
+        ResetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                ResetButtonActionPerformed(evt);
             }
         });
 
@@ -143,7 +143,7 @@ public class Tambah extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(0, 0, Short.MAX_VALUE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(jLabel4)
@@ -158,7 +158,7 @@ public class Tambah extends javax.swing.JFrame {
                                             .addComponent(jLabel2)
                                             .addGap(7, 7, 7)))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ComboJenis, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(no)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(jLabel3)
@@ -166,7 +166,7 @@ public class Tambah extends javax.swing.JFrame {
                                     .addComponent(name)))
                             .addGap(45, 45, 45)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BatalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(212, 212, 212)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -175,7 +175,7 @@ public class Tambah extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
                     .addComponent(jLabel11)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SimpanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(signature1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
@@ -190,7 +190,7 @@ public class Tambah extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboJenis, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel7)
                     .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -224,19 +224,19 @@ public class Tambah extends javax.swing.JFrame {
                         .addComponent(signature3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4)
+                    .addComponent(ResetButton)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2)
-                        .addComponent(jButton3)))
+                        .addComponent(BatalButton)
+                        .addComponent(SimpanButton)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void ComboJenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboJenisActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_ComboJenisActionPerformed
 
     private void addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressActionPerformed
         // TODO add your handling code here:
@@ -250,18 +250,18 @@ public class Tambah extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_signature2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_ResetButtonActionPerformed
 
     private void signature3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signature3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_signature3ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void SimpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanButtonActionPerformed
         Kerma kerma = new Kerma();
         
-        kerma.setJenis(jComboBox1.getSelectedIndex()+1);
+        kerma.setJenis(ComboJenis.getSelectedIndex()+1);
         kerma.setNomor(no.getText());
         kerma.setNama(name.getText());
         kerma.setAlamat(address.getText());
@@ -273,7 +273,7 @@ public class Tambah extends javax.swing.JFrame {
 //        Implementation Arrangement
 //        Memorandum of Understanding Memorandum of Agreement
 //        kerma.setJenis(1);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_SimpanButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,11 +311,11 @@ public class Tambah extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BatalButton;
+    private javax.swing.JComboBox<String> ComboJenis;
+    private javax.swing.JButton ResetButton;
+    private javax.swing.JButton SimpanButton;
     private javax.swing.JTextField address;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

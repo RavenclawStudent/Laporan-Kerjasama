@@ -14,21 +14,37 @@ import java.util.Date;
  */
 public class Kerma {
 
+    private String jenis;
+    private String nomor;
+    private String nama;
     private String alamat;
     private String detail;
-    private String internal;
-    private String jenis;
-    private String link;
-    private String nama;
-    private String nomor;
-    private String partner;
     private Date tg_awal;
     private Date tg_akhir;
-
+    private String internal;
+    private String partner;
+    private String link;
+    private String negara;
     public SimpleDateFormat dbDateFormat;
     public SimpleDateFormat outputDateFormat;
 
     public Kerma() {
+        dbDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        outputDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+    }
+
+    public Kerma(String jenis, String nomor, String nama, String alamat, String detail, Date tg_awal, Date tg_akhir, String internal, String partner, String link, String negara) {
+        this.jenis = jenis;
+        this.nomor = nomor;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.detail = detail;
+        this.tg_awal = tg_awal;
+        this.tg_akhir = tg_akhir;
+        this.internal = internal;
+        this.partner = partner;
+        this.link = link;
+        this.negara = negara;
         dbDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         outputDateFormat = new SimpleDateFormat("dd MMMM yyyy");
     }
@@ -132,5 +148,13 @@ public class Kerma {
 
     void setJenis(int i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getNegara() {
+        return negara;
+    }
+
+    public void setNegara(String negara) {
+        this.negara = negara;
     }
 }
