@@ -5,6 +5,18 @@
  */
 package lapor.kerma;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lapor.kerma.frame.Data;
+import static lapor.kerma.frame.Detail.id;
+
 /**
  *
  * @author ODETTE
@@ -14,6 +26,14 @@ public class Tambah extends javax.swing.JFrame {
     /**
      * Creates new form Tambah
      */
+    static final String JBDC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/laporkerma";
+    static final String DB_USERNAME = "kerma";
+    static final String DB_PASSWORD = "Laporkerma1@";
+    Connection conn = null;
+    Statement stmt = null;
+    SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+
     public Tambah() {
         initComponents();
     }
@@ -37,21 +57,21 @@ public class Tambah extends javax.swing.JFrame {
         address = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        bentuk_kerja = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
-        jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
+        tglAwal = new org.jdesktop.swingx.JXDatePicker();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jXDatePicker2 = new org.jdesktop.swingx.JXDatePicker();
+        tglAkhir = new org.jdesktop.swingx.JXDatePicker();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        signature1 = new javax.swing.JTextField();
-        signature2 = new javax.swing.JTextField();
+        internal_Sign = new javax.swing.JTextField();
+        partner_sign = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         BatalButton = new javax.swing.JButton();
         SimpanButton = new javax.swing.JButton();
         ResetButton = new javax.swing.JButton();
-        signature3 = new javax.swing.JTextField();
+        link = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,9 +98,9 @@ public class Tambah extends javax.swing.JFrame {
 
         jLabel5.setText("Bentuk Kerjasama");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        bentuk_kerja.setColumns(20);
+        bentuk_kerja.setRows(5);
+        jScrollPane1.setViewportView(bentuk_kerja);
 
         jLabel6.setText("Nama Penandatangan");
 
@@ -92,21 +112,26 @@ public class Tambah extends javax.swing.JFrame {
 
         jLabel10.setText("Pihak Partnership");
 
-        signature1.addActionListener(new java.awt.event.ActionListener() {
+        internal_Sign.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signature1ActionPerformed(evt);
+                internal_SignActionPerformed(evt);
             }
         });
 
-        signature2.addActionListener(new java.awt.event.ActionListener() {
+        partner_sign.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signature2ActionPerformed(evt);
+                partner_signActionPerformed(evt);
             }
         });
 
         jLabel11.setText("Link File Dokumen");
 
         BatalButton.setText("Batal");
+        BatalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BatalButtonActionPerformed(evt);
+            }
+        });
 
         SimpanButton.setText("Simpan");
         SimpanButton.addActionListener(new java.awt.event.ActionListener() {
@@ -122,9 +147,9 @@ public class Tambah extends javax.swing.JFrame {
             }
         });
 
-        signature3.addActionListener(new java.awt.event.ActionListener() {
+        link.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signature3ActionPerformed(evt);
+                linkActionPerformed(evt);
             }
         });
 
@@ -178,11 +203,11 @@ public class Tambah extends javax.swing.JFrame {
                     .addComponent(SimpanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(signature1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                    .addComponent(signature2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jXDatePicker2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(signature3, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
+                    .addComponent(internal_Sign, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                    .addComponent(partner_sign, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                    .addComponent(tglAwal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tglAkhir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(link, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
@@ -193,13 +218,13 @@ public class Tambah extends javax.swing.JFrame {
                     .addComponent(ComboJenis, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel7)
-                    .addComponent(jXDatePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tglAwal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(no, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jXDatePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tglAkhir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -210,18 +235,18 @@ public class Tambah extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(signature1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(internal_Sign, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel10)
-                    .addComponent(signature2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(partner_sign, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
-                        .addComponent(signature3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(link, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ResetButton)
@@ -242,38 +267,105 @@ public class Tambah extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_addressActionPerformed
 
-    private void signature1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signature1ActionPerformed
+    private void internal_SignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_internal_SignActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_signature1ActionPerformed
+    }//GEN-LAST:event_internal_SignActionPerformed
 
-    private void signature2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signature2ActionPerformed
+    private void partner_signActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partner_signActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_signature2ActionPerformed
+    }//GEN-LAST:event_partner_signActionPerformed
 
     private void ResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButtonActionPerformed
         // TODO add your handling code here:
+        no.setText("");
+        name.setText("");
+        address.setText("");
+        bentuk_kerja.setText("");
+        internal_Sign.setText("");
+        partner_sign.setText("");
+        link.setText("");
+
     }//GEN-LAST:event_ResetButtonActionPerformed
 
-    private void signature3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signature3ActionPerformed
+    private void linkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_linkActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_signature3ActionPerformed
+    }//GEN-LAST:event_linkActionPerformed
 
     private void SimpanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimpanButtonActionPerformed
-        Kerma kerma = new Kerma();
-        
-        kerma.setJenis(ComboJenis.getSelectedIndex()+1);
-        kerma.setNomor(no.getText());
-        kerma.setNama(name.getText());
-        kerma.setAlamat(address.getText());
-        kerma.setDetail(jTextArea1.getText());
-        kerma.setTg_awal(jXDatePicker1.getDate());
-//        String tgl = dbDateFormat
-        
 
+        int jenis = ComboJenis.getSelectedIndex() + 1;
+        String nomor = no.getText();
+        String nama = name.getText();
+        String alamat = address.getText();
+        String detail = bentuk_kerja.getText();
+        Date tg_awal = tglAwal.getDate();
+        Date tg_akhir = tglAkhir.getDate();
+        String internal = internal_Sign.getText();
+        String partner = partner_sign.getText();
+        String link_dok = link.getText();
+
+        Kerma kerma = new Kerma();
+        kerma.setJenis(jenis+"");
+        kerma.setNomor(nomor);
+        kerma.setNama(nama);
+        kerma.setAlamat(alamat);
+        kerma.setDetail(detail);
+        kerma.setTg_awal(tg_awal);
+        kerma.setTg_akhir(tg_akhir);
+        kerma.setInternal(internal);
+        kerma.setPartner(partner);
+        kerma.setLink(link_dok);
+        //jadikan tgl seperti format db
+        String tgl_awal_db = kerma.dbDateFormat.format(tg_awal);
+        String tgl_akhir_db = kerma.dbDateFormat.format(tg_akhir);
+
+        //Masukkan ke DB
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("Connecting to database...");
+        System.out.println("...");
+        try {
+            conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            if (conn != null) {
+                System.out.println("Successfully connected to database\n");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("Creating statement ...\n");
+        try {
+            stmt = conn.createStatement();
+            String sql = "INSERT INTO `tb_kerjasama` (`jenis`, `nomor`, `nama`, "
+                    + "`alamat`, `detail`, `tg_awal`, `tg_akhir`, `internal`, `partner`, `link`,negara) "
+                    + "VALUES ('"+jenis+"', '"+nomor+"', '"+nama+"', '"+alamat+"', '"+detail+"'"
+                    + ", '"+tgl_awal_db+"', '"+tgl_akhir_db+"', '"+internal+"', '"+partner+"', '"+link_dok+"','ID')";
+            System.out.println(sql);
+            stmt.execute(sql);
+
+            //Tutup
+            dispose();
+        } catch (Exception e) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println(e.getMessage());
+        }
+        //konstruktor
+
+//        String tgl = dbDateFormat
 //        Implementation Arrangement
 //        Memorandum of Understanding Memorandum of Agreement
 //        kerma.setJenis(1);
     }//GEN-LAST:event_SimpanButtonActionPerformed
+
+    private void BatalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BatalButtonActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_BatalButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,6 +408,8 @@ public class Tambah extends javax.swing.JFrame {
     private javax.swing.JButton ResetButton;
     private javax.swing.JButton SimpanButton;
     private javax.swing.JTextField address;
+    private javax.swing.JTextArea bentuk_kerja;
+    private javax.swing.JTextField internal_Sign;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -328,13 +422,11 @@ public class Tambah extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker2;
+    private javax.swing.JTextField link;
     private javax.swing.JTextField name;
     private javax.swing.JTextField no;
-    private javax.swing.JTextField signature1;
-    private javax.swing.JTextField signature2;
-    private javax.swing.JTextField signature3;
+    private javax.swing.JTextField partner_sign;
+    private org.jdesktop.swingx.JXDatePicker tglAkhir;
+    private org.jdesktop.swingx.JXDatePicker tglAwal;
     // End of variables declaration//GEN-END:variables
 }

@@ -34,17 +34,20 @@
             <Property name="text" type="java.lang.String" value="Data"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="MenuTambah">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tambah Data"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuTambahActionPerformed"/>
+              </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem5">
+            <MenuItem class="javax.swing.JMenuItem" name="MenuData">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Data"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuDataActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

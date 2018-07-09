@@ -224,6 +224,12 @@ public class Data extends javax.swing.JFrame {
         });
 
         editButton.setText("Edit Data");
+        editButton.setVerifyInputWhenFocusTarget(false);
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Hapus Data");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -295,6 +301,16 @@ public class Data extends javax.swing.JFrame {
 
     private void detailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailButtonActionPerformed
         // TODO add your handling code here:
+        int i = jTable1.getSelectedRow();
+        id = (String) jTable1.getValueAt(i, 0);
+        
+        Detail.MODE = 1;
+        Detail.id = id;
+        
+        //Pindah Form
+        Detail dt = new Detail();
+        dt.setVisible(true);
+        dispose();
     }//GEN-LAST:event_detailButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -312,6 +328,19 @@ public class Data extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        // TODO add your handling code here:
+        int i = jTable1.getSelectedRow();
+        id = (String) jTable1.getValueAt(i, 0);
+        //Pengiriman data 
+        Detail.MODE = 2;
+        Detail.id = id;
+        
+        Detail dt = new Detail();
+        dt.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_editButtonActionPerformed
 
     /**
      * @param args the command line arguments

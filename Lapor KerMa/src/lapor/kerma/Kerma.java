@@ -32,7 +32,7 @@ public class Kerma {
         dbDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         outputDateFormat = new SimpleDateFormat("dd MMMM yyyy");
     }
-
+    //Konstruktor
     public Kerma(String jenis, String nomor, String nama, String alamat, String detail, Date tg_awal, Date tg_akhir, String internal, String partner, String link, String negara) {
         this.jenis = jenis;
         this.nomor = nomor;
@@ -146,10 +146,7 @@ public class Kerma {
         this.outputDateFormat = outputDateFormat;
     }
 
-    void setJenis(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+ 
     public String getNegara() {
         return negara;
     }

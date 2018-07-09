@@ -381,6 +381,8 @@ public class Detail extends javax.swing.JFrame {
 
     private void keluarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keluarButtonActionPerformed
         // TODO add your handling code here:
+        //keluar
+        dispose();
     }//GEN-LAST:event_keluarButtonActionPerformed
 
     private void pihak_partnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pihak_partnerActionPerformed

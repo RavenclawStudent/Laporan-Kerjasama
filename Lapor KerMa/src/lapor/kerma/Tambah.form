@@ -84,11 +84,11 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="signature1" pref="198" max="32767" attributes="0"/>
-                  <Component id="signature2" alignment="0" pref="198" max="32767" attributes="0"/>
-                  <Component id="jXDatePicker1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jXDatePicker2" alignment="0" max="32767" attributes="0"/>
-                  <Component id="signature3" pref="198" max="32767" attributes="0"/>
+                  <Component id="internal_Sign" pref="198" max="32767" attributes="0"/>
+                  <Component id="partner_sign" alignment="0" pref="198" max="32767" attributes="0"/>
+                  <Component id="tglAwal" alignment="0" max="32767" attributes="0"/>
+                  <Component id="tglAkhir" alignment="0" max="32767" attributes="0"/>
+                  <Component id="link" pref="198" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
           </Group>
@@ -102,14 +102,14 @@
                   <Component id="ComboJenis" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jXDatePicker1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tglAwal" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="no" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jXDatePicker2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tglAkhir" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -122,20 +122,20 @@
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="address" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="signature1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="internal_Sign" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="signature2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="partner_sign" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="signature3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="link" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="18" max="32767" attributes="0"/>
@@ -210,7 +210,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextArea" name="jTextArea1">
+        <Component class="javax.swing.JTextArea" name="bentuk_kerja">
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
@@ -223,7 +223,7 @@
         <Property name="text" type="java.lang.String" value="Nama Penandatangan"/>
       </Properties>
     </Component>
-    <Component class="org.jdesktop.swingx.JXDatePicker" name="jXDatePicker1">
+    <Component class="org.jdesktop.swingx.JXDatePicker" name="tglAwal">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
@@ -235,7 +235,7 @@
         <Property name="text" type="java.lang.String" value="Tanggal Berakhir"/>
       </Properties>
     </Component>
-    <Component class="org.jdesktop.swingx.JXDatePicker" name="jXDatePicker2">
+    <Component class="org.jdesktop.swingx.JXDatePicker" name="tglAkhir">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
@@ -247,14 +247,14 @@
         <Property name="text" type="java.lang.String" value="Pihak Partnership"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="signature1">
+    <Component class="javax.swing.JTextField" name="internal_Sign">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signature1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="internal_SignActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="signature2">
+    <Component class="javax.swing.JTextField" name="partner_sign">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signature2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="partner_signActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
@@ -266,6 +266,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Batal"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BatalButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="SimpanButton">
       <Properties>
@@ -283,9 +286,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResetButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="signature3">
+    <Component class="javax.swing.JTextField" name="link">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signature3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="linkActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
