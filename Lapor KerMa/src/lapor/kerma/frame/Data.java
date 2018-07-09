@@ -312,7 +312,7 @@ public class Data extends javax.swing.JFrame {
         //dt.setVisible(true);
         
         // menggunakan instance
-        Detail.getExample().setVisible(true);
+        Detail.getInstance().setVisible(true);
 //        dispose();
     }//GEN-LAST:event_detailButtonActionPerformed
 

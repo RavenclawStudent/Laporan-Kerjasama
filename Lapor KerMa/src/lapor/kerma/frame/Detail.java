@@ -39,13 +39,13 @@ public class Detail extends javax.swing.JFrame {
     public static String id ="BAUK-0001";
     
     //Variable Instance / Example
-    private static Detail example=null;
-    public static Detail getExample(){
-        if(example==null){
-            example = new Detail();
+    private static Detail instance=null;
+    public static Detail getInstance(){
+        if(instance==null){
+            instance = new Detail();
         }
         
-        return example;
+        return instance;
     }
     SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
     public Detail() {
