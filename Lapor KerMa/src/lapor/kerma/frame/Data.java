@@ -308,9 +308,12 @@ public class Data extends javax.swing.JFrame {
         Detail.id = id;
         
         //Pindah Form
-        Detail dt = new Detail();
-        dt.setVisible(true);
-        dispose();
+        //Detail dt = new Detail();
+        //dt.setVisible(true);
+        
+        // menggunakan instance
+        Detail.getExample().setVisible(true);
+//        dispose();
     }//GEN-LAST:event_detailButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

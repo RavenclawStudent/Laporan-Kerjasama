@@ -38,6 +38,15 @@ public class Detail extends javax.swing.JFrame {
     public static int MODE=1;
     public static String id ="BAUK-0001";
     
+    //Variable Instance / Example
+    private static Detail example=null;
+    public static Detail getExample(){
+        if(example==null){
+            example = new Detail();
+        }
+        
+        return example;
+    }
     SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
     public Detail() {
         initComponents();
