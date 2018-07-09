@@ -77,7 +77,7 @@ public class Tambah extends javax.swing.JFrame {
 
         jLabel1.setText("Jenis Kerjasama");
 
-        ComboJenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Implementation Arrangement", "Memorandum of Understanding", "Memorandum of Agreement" }));
+        ComboJenis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Memorandum of Understanding", "Implementation Arrangement", "Memorandum of Agreement" }));
         ComboJenis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboJenisActionPerformed(evt);

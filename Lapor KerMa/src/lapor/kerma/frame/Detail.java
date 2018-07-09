@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -93,6 +94,8 @@ public class Detail extends javax.swing.JFrame {
                 String no = hasil.getString("nomor");
                 String nama = hasil.getString("nama");
                 String jenis = hasil.getString("jenis");
+                //Rubah jenis jadi int
+                int pos_jenis = Integer.parseInt(jenis);
                 switch (jenis) {
                     case "1":
                         jenis = "Memorandum of Understanding";
@@ -129,7 +132,8 @@ public class Detail extends javax.swing.JFrame {
                 Kerma new_kerma = new Kerma(jenis,no,nama,alamat,detail,tg_awal,tg_akhir,internal,partner,link,negara);
                 
                 //tampil di form
-                jenis_kerjasama.setText(jenis);
+//                jenis_kerjasama.setText(jenis);
+                jenis_kerjasama.setSelectedIndex(pos_jenis-1);
                 no_dok.setText(no);
                 nama_institusi.setText(nama);
                 address.setText(alamat);
@@ -176,11 +180,11 @@ public class Detail extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         keluarButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
-        jenis_kerjasama = new javax.swing.JTextField();
         tgl_dibuat = new javax.swing.JTextField();
         tgl_berakhir = new javax.swing.JTextField();
         link_kerjasama = new javax.swing.JTextField();
         saveButton = new javax.swing.JButton();
+        jenis_kerjasama = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -248,8 +252,6 @@ public class Detail extends javax.swing.JFrame {
             }
         });
 
-        jenis_kerjasama.setText("test");
-
         tgl_dibuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tgl_dibuatActionPerformed(evt);
@@ -275,6 +277,13 @@ public class Detail extends javax.swing.JFrame {
             }
         });
 
+        jenis_kerjasama.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Memorandum of Understanding", "Implementation Arrangement", "Memorandum of Agreement" }));
+        jenis_kerjasama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jenis_kerjasamaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -284,12 +293,16 @@ public class Detail extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addGap(235, 235, 235))
-                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jenis_kerjasama, 0, 1, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(keluarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                                 .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -304,12 +317,7 @@ public class Detail extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(7, 7, 7)
                                 .addComponent(no_dok)))
-                        .addGap(51, 51, 51))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jenis_kerjasama)
-                        .addGap(49, 49, 49)))
+                        .addGap(51, 51, 51)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,7 +329,7 @@ public class Detail extends javax.swing.JFrame {
                             .addComponent(jLabel11))
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pihak_internal, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                            .addComponent(pihak_internal, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
                             .addComponent(pihak_partner)
                             .addComponent(tgl_dibuat, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(tgl_berakhir, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -334,12 +342,12 @@ public class Detail extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel7)
-                    .addComponent(jenis_kerjasama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tgl_dibuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tgl_dibuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jenis_kerjasama, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -432,12 +440,89 @@ public class Detail extends javax.swing.JFrame {
         saveButton.setEnabled(false);
         
         //Disable seluruhnya
-        //Enable seluruh element 
         enable_seluruhnya(false);
+        
+        //Simpan ke dalam db
+        int jenis = jenis_kerjasama.getSelectedIndex() + 1;
+        String nomor = no_dok.getText();
+        String nama = nama_institusi.getText();
+        String alamat = address.getText();
+        String detail = bentuk_kerjasama.getText();
+        String tg_awal = tgl_dibuat.getText();
+        String tg_akhir = tgl_berakhir.getText();
+//        Date tg_awal = tglAwal.getDate();
+//        Date tg_akhir = tglAkhir.getDate();
+        String internal = pihak_internal.getText();
+        String partner = pihak_partner.getText();
+        String link_dok = link_kerjasama.getText();
+
+        Kerma kerma = new Kerma();
+        kerma.setJenis(jenis+"");
+        kerma.setNomor(nomor);
+        kerma.setNama(nama);
+        kerma.setAlamat(alamat);
+        kerma.setDetail(detail);
+        Date tgl_awal_obj=null,tgl_akhir_obj=null;
+        try {
+            //jadikan tgl dari string ke date agar bisa disimpan di object
+            tgl_awal_obj = kerma.dbDateFormat.parse(tg_awal);
+            tgl_akhir_obj = kerma.dbDateFormat.parse(tg_akhir);
+        } catch (ParseException ex) {
+            Logger.getLogger(Detail.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        kerma.setTg_awal(tgl_awal_obj);
+        kerma.setTg_akhir(tgl_akhir_obj);
+        kerma.setInternal(internal);
+        kerma.setPartner(partner);
+        kerma.setLink(link_dok);
+        
+
+        //Masukkan ke DB
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("Connecting to database...");
+        System.out.println("...");
+        try {
+            conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            if (conn != null) {
+                System.out.println("Successfully connected to database\n");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        System.out.println("Creating statement ...\n");
+        try {
+            stmt = conn.createStatement();
+            String sql = "UPDATE `tb_kerjasama` SET `jenis` = '"+jenis+"', "
+                    + "`nama` = '"+nama+"', `alamat` = '"+alamat+"'"
+                    + ", `detail` = '"+detail+"', `tg_awal` = '"+tg_awal+"'"
+                    + ", `tg_akhir` = '"+tg_akhir+"', `internal` = '"+internal+"'"
+                    + ", `partner` = '"+partner+"', `link` = '"+link_dok+"', `negara` = 'IDN' "
+                    + "WHERE `tb_kerjasama`.`nomor` = '"+nomor+"';";
+            System.out.println(sql);
+            stmt.execute(sql);
+
+            //Tutup
+            dispose();
+        } catch (Exception e) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, e);
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void jenis_kerjasamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jenis_kerjasamaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jenis_kerjasamaActionPerformed
     void enable_seluruhnya(boolean pilihan){
         //jenis_kerjasama.setEnabled(pilihan); tidak dapat dicopy
-        jenis_kerjasama.setEditable(pilihan);
+        jenis_kerjasama.setEnabled(pilihan);
         no_dok.setEditable(pilihan);
         nama_institusi.setEditable(pilihan);
         address.setEditable(pilihan);
@@ -505,7 +590,7 @@ public class Detail extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jenis_kerjasama;
+    private javax.swing.JComboBox<String> jenis_kerjasama;
     private javax.swing.JButton keluarButton;
     private javax.swing.JTextField link_kerjasama;
     private javax.swing.JTextField nama_institusi;
