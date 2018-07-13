@@ -6,7 +6,7 @@
 package lapor.kerma;
 
 import java.nio.file.Paths;
-import lapor.kerma.frame.KermaFrame;
+import lapor.kerma.frame.KERMA;
 import lapor.kerma.model.Login;
 
 /**
@@ -39,12 +39,16 @@ public class LaporKerMa {
         // TODO code application logic here
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //SimanisApp.getInstance().getLoginController().displayLoginFrame();
-                KermaFrame kermasFrame = KermaFrame.getInstance();
-
-                kermasFrame.tampilkanMenuAdmin(false);
-
-                kermasFrame.setVisible(true);
+//                KERMA kermasFrame = KERMA.getInstance();
+//                kermasFrame.tampilkanMenuAdmin(false);
+//                KERMA().Runnable runnable = new Runnable() {
+//                    public void run() {
+//                        
+//                    }
+//                };
+//                .setVisible(true);
+ new KERMA.getInstance().tampilkanMenuAdmin(false);
+                
 
             }
         });

@@ -24,7 +24,7 @@ import lapor.kerma.model.Kerma;
  *
  * @author ODETTE
  */
-public class Data extends javax.swing.JFrame {
+public class Data extends javax.swing.JInternalFrame {
 
     static final String JBDC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/laporkerma";

@@ -25,6 +25,7 @@ public class Kerma {
     private String partner;
     private String link;
     private String negara;
+    private String userid;
     public SimpleDateFormat dbDateFormat;
     public SimpleDateFormat outputDateFormat;
 
@@ -33,7 +34,7 @@ public class Kerma {
         outputDateFormat = new SimpleDateFormat("dd MMMM yyyy");
     }
     //Konstruktor
-    public Kerma(String jenis, String nomor, String nama, String alamat, String detail, Date tg_awal, Date tg_akhir, String internal, String partner, String link, String negara) {
+    public Kerma(String jenis, String nomor, String nama, String alamat, String detail, Date tg_awal, Date tg_akhir, String internal, String partner, String link, String negara, String userid) {
         this.jenis = jenis;
         this.nomor = nomor;
         this.nama = nama;
@@ -45,6 +46,7 @@ public class Kerma {
         this.partner = partner;
         this.link = link;
         this.negara = negara;
+        this.userid = userid;
         dbDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         outputDateFormat = new SimpleDateFormat("dd MMMM yyyy");
     }
@@ -153,5 +155,13 @@ public class Kerma {
 
     public void setNegara(String negara) {
         this.negara = negara;
+    }
+    
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }

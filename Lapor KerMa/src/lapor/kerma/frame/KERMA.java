@@ -5,50 +5,44 @@
  */
 package lapor.kerma.frame;
 
-
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import lapor.kerma.LaporKerMa;
+import lapor.kerma.frame.Data;
 
 /**
  *
  * @author ODETTE
  */
-public class KermaFrame extends javax.swing.JFrame {
-
+public class KERMA extends javax.swing.JFrame {
+    public static String kdUnit;
     /**
-     * Creates new form KermaFrame
+     * Creates new form KERMA
      */
-    static KermaFrame instance = null;
+    static KERMA instance = null;
     static Data data = null;
     static Detail detail = null;
 
-    public static KermaFrame getInstance() {
+    public static KERMA getInstance() {
         if (instance == null) {
-            instance = new KermaFrame();
+            instance = new KERMA();
         }
         return instance;
     }
-    
-    public KermaFrame() {
-        
+    public KERMA() {
         initComponents();
-        data = Data.getInstance();
-        this.desktopPane.add(data);
-
-        detail = Detail.getInstance();
-        this.desktopPane.add(detail);
         
+        data = Data.getInstance();
+        detail = Detail.getInstance();
+        this.desktopPane.add(data);
+        this.desktopPane.add(detail);
     }
     
-    
-    public void tampilkanMenuAdmin(boolean isLogin) {
+     public void tampilkanMenuAdmin(boolean isLogin) {
         this.menuLogin.setVisible(!isLogin);        
         this.menuLogout.setVisible(isLogin);
         this.menuData.setVisible(isLogin);
         
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,10 +57,10 @@ public class KermaFrame extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         menuLogin = new javax.swing.JMenuItem();
         menuLogout = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuKeluar = new javax.swing.JMenuItem();
         menuData = new javax.swing.JMenu();
-        MenuTambah = new javax.swing.JMenuItem();
-        MenuData = new javax.swing.JMenuItem();
+        menuTambah = new javax.swing.JMenuItem();
+        menuListData = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,11 +68,11 @@ public class KermaFrame extends javax.swing.JFrame {
         desktopPane.setLayout(desktopPaneLayout);
         desktopPaneLayout.setHorizontalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
+            .addGap(0, 741, Short.MAX_VALUE)
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 539, Short.MAX_VALUE)
+            .addGap(0, 504, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Menu");
@@ -99,33 +93,33 @@ public class KermaFrame extends javax.swing.JFrame {
         });
         jMenu1.add(menuLogout);
 
-        jMenuItem3.setText("Keluar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuKeluar.setText("Keluar");
+        menuKeluar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuKeluarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(menuKeluar);
 
         jMenuBar1.add(jMenu1);
 
         menuData.setText("Data");
 
-        MenuTambah.setText("Tambah Data");
-        MenuTambah.addActionListener(new java.awt.event.ActionListener() {
+        menuTambah.setText("Tambah Data");
+        menuTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuTambahActionPerformed(evt);
+                menuTambahActionPerformed(evt);
             }
         });
-        menuData.add(MenuTambah);
+        menuData.add(menuTambah);
 
-        MenuData.setText("Data");
-        MenuData.addActionListener(new java.awt.event.ActionListener() {
+        menuListData.setText("Data");
+        menuListData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuDataActionPerformed(evt);
+                menuListDataActionPerformed(evt);
             }
         });
-        menuData.add(MenuData);
+        menuData.add(menuListData);
 
         jMenuBar1.add(menuData);
 
@@ -135,7 +129,9 @@ public class KermaFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(desktopPane)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,32 +141,15 @@ public class KermaFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MenuDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuDataActionPerformed
-        // TODO add your handling code here:
-        //Pindah Ke Data
-        Data data = new Data();
-//        jDesktopPane1.add(data);
-        data.setVisible(true);
-    }//GEN-LAST:event_MenuDataActionPerformed
-
     private void menuLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLoginActionPerformed
-        // TODO add your handling code here:
-        
+                                                 
+        LoginDialog loginDialog = new LoginDialog(this, rootPaneCheckingEnabled);
+        loginDialog.setLocationRelativeTo(this);
+        loginDialog.setVisible(true);
     }//GEN-LAST:event_menuLoginActionPerformed
 
-    private void MenuTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuTambahActionPerformed
-        // TODO add your handling code here:
-        Detail detail = new Detail();
-        Detail.MODE = 2;
-        detail.setVisible(true);
-    }//GEN-LAST:event_MenuTambahActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-    System.exit(0);        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
-
     private void menuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLogoutActionPerformed
-        // TODO add your handling code here:
+        
         int a = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout", "Logout", JOptionPane.YES_NO_OPTION);
 
         if (a == JOptionPane.YES_OPTION) {
@@ -181,6 +160,20 @@ public class KermaFrame extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_menuLogoutActionPerformed
+
+    private void menuKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuKeluarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_menuKeluarActionPerformed
+
+    private void menuTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTambahActionPerformed
+        detail.MODE = 1;
+        detail.getInstance().setVisible(true);
+    }//GEN-LAST:event_menuTambahActionPerformed
+
+    private void menuListDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListDataActionPerformed
+        
+        data.getInstance().setVisible(true);
+    }//GEN-LAST:event_menuListDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,33 +192,33 @@ public class KermaFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(KermaFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KERMA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(KermaFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KERMA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(KermaFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KERMA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(KermaFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(KERMA.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new KermaFrame().setVisible(true);
+                new KERMA().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem MenuData;
-    private javax.swing.JMenuItem MenuTambah;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu menuData;
+    private javax.swing.JMenuItem menuKeluar;
+    private javax.swing.JMenuItem menuListData;
     private javax.swing.JMenuItem menuLogin;
     private javax.swing.JMenuItem menuLogout;
+    private javax.swing.JMenuItem menuTambah;
     // End of variables declaration//GEN-END:variables
 }
