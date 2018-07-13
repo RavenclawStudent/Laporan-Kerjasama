@@ -14,7 +14,8 @@ public class Login extends javax.swing.JPanel {
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Login(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
     }
 

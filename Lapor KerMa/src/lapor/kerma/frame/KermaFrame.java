@@ -5,7 +5,10 @@
  */
 package lapor.kerma.frame;
 
-import lapor.kerma.Tambah;
+
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import lapor.kerma.LaporKerMa;
 
 /**
  *
@@ -16,8 +19,34 @@ public class KermaFrame extends javax.swing.JFrame {
     /**
      * Creates new form KermaFrame
      */
+    static KermaFrame instance = null;
+    static Data data = null;
+    static Detail detail = null;
+
+    public static KermaFrame getInstance() {
+        if (instance == null) {
+            instance = new KermaFrame();
+        }
+        return instance;
+    }
+    
     public KermaFrame() {
+        
         initComponents();
+        data = Data.getInstance();
+        this.desktopPane.add(data);
+
+        detail = Detail.getInstance();
+        this.desktopPane.add(detail);
+        
+    }
+    
+    
+    public void tampilkanMenuAdmin(boolean isLogin) {
+        this.menuLogin.setVisible(!isLogin);        
+        this.menuLogout.setVisible(isLogin);
+        this.menuData.setVisible(isLogin);
+        
     }
 
     /**
@@ -29,48 +58,58 @@ public class KermaFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        desktopPane = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuLogin = new javax.swing.JMenuItem();
+        menuLogout = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuData = new javax.swing.JMenu();
         MenuTambah = new javax.swing.JMenuItem();
         MenuData = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout desktopPaneLayout = new javax.swing.GroupLayout(desktopPane);
+        desktopPane.setLayout(desktopPaneLayout);
+        desktopPaneLayout.setHorizontalGroup(
+            desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 760, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        desktopPaneLayout.setVerticalGroup(
+            desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 539, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Menu");
 
-        jMenuItem2.setText("Login");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        menuLogin.setText("Login");
+        menuLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                menuLoginActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(menuLogin);
 
-        jMenuItem1.setText("Logout");
-        jMenu1.add(jMenuItem1);
+        menuLogout.setText("Logout");
+        menuLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuLogoutActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuLogout);
 
         jMenuItem3.setText("Keluar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Data");
+        menuData.setText("Data");
 
         MenuTambah.setText("Tambah Data");
         MenuTambah.addActionListener(new java.awt.event.ActionListener() {
@@ -78,7 +117,7 @@ public class KermaFrame extends javax.swing.JFrame {
                 MenuTambahActionPerformed(evt);
             }
         });
-        jMenu2.add(MenuTambah);
+        menuData.add(MenuTambah);
 
         MenuData.setText("Data");
         MenuData.addActionListener(new java.awt.event.ActionListener() {
@@ -86,9 +125,9 @@ public class KermaFrame extends javax.swing.JFrame {
                 MenuDataActionPerformed(evt);
             }
         });
-        jMenu2.add(MenuData);
+        menuData.add(MenuData);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuData);
 
         setJMenuBar(jMenuBar1);
 
@@ -96,11 +135,11 @@ public class KermaFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(desktopPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1)
+            .addComponent(desktopPane)
         );
 
         pack();
@@ -114,15 +153,34 @@ public class KermaFrame extends javax.swing.JFrame {
         data.setVisible(true);
     }//GEN-LAST:event_MenuDataActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void menuLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+        
+    }//GEN-LAST:event_menuLoginActionPerformed
 
     private void MenuTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuTambahActionPerformed
         // TODO add your handling code here:
-        Tambah tambah = new Tambah();
-        tambah.setVisible(true);
+        Detail detail = new Detail();
+        Detail.MODE = 2;
+        detail.setVisible(true);
     }//GEN-LAST:event_MenuTambahActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void menuLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuLogoutActionPerformed
+        // TODO add your handling code here:
+        int a = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin logout", "Logout", JOptionPane.YES_NO_OPTION);
+
+        if (a == JOptionPane.YES_OPTION) {
+            LaporKerMa app = LaporKerMa.getInstance();
+            app.setActiveLogin(null);
+            
+            tampilkanMenuAdmin(false);
+
+        }
+    }//GEN-LAST:event_menuLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,12 +220,12 @@ public class KermaFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MenuData;
     private javax.swing.JMenuItem MenuTambah;
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenu menuData;
+    private javax.swing.JMenuItem menuLogin;
+    private javax.swing.JMenuItem menuLogout;
     // End of variables declaration//GEN-END:variables
 }
